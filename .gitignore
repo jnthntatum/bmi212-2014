@@ -52,3 +52,6 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# credentials for twitter dev api
+*.cred
+
