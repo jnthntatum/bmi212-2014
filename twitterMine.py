@@ -3,6 +3,7 @@
 
 import utils
 import twython
+import config
 
 def main():
 	# should change these to use a dynamically loaded file
@@ -10,7 +11,7 @@ def main():
 	creds = utils.load_credentials_file()
 	api_client = twython.Twython(*creds)
 
-	drugs_to_search = [ '"' + el + '"' if el.find(' ') >= 0 else el for el in drugs['clozapine'] ]
+	drugs_to_search = [ '"' + el + '"' if el.find(' ') >= 0 else el for el in drugs['risperidone'] ]
 	query = utils.url_encode( ' OR '.join(drugs_to_search) ) 
 
 	print(query)

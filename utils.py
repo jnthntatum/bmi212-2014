@@ -5,6 +5,7 @@
 
 from collections import namedtuple
 import urllib
+import config
 
 SCHIZO_DRUGS = './schizo_drugs.dat'
 DEFAULT_CRED = './jtatum.cred'
