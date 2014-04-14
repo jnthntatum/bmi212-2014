@@ -27,7 +27,7 @@ def main():
 	print (tlt)
 
 	
-def setup(file = utils.DEFAULT_CRED):
+def setup(file = config.DEFAULT_CRED):
 	creds = utils.load_credentials_file()
 	api_client = twython.Twython(*creds)
 	return api_client

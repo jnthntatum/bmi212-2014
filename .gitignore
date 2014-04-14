@@ -55,3 +55,4 @@ docs/_build/
 # credentials for twitter dev api
 *.cred
 
+config.py

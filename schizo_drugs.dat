@@ -1,25 +1,28 @@
 # drugs for schizophrenia pulled from pharmgkb
 # first name is phargkb small molecule name, rest of names are trade names
 # Most used -> clozapine, aripiprazole, risperidone
-acetophenazine,tindal
-aripiprazole,abilify,abilitat
-carbamazepine,Apo-Carbamazepine,Atretol,Biston,Calepsin,Carbamazepen,Carbatrol,Carbazepine,Carbelan,Epitol,Equetro,Finlepsin,Karbamazepin,Lexin,Neurotol,Novo-Carbamaz,Nu-Carbamazepine,Sirtal,Stazepin,Stazepine,Taro-Carbamazepine,Taro-Carbamazepine Cr,Tegretal,Tegretol,Tegretol Chewtabs,Tegretol Cr,Tegretol-Xr,Telesmin,Teril,Timonil
-chlorpromazine,Chloropromazine,Chlorpromanyl,Chlorpromanyl-20,Chlorpromanyl-40,Chlorpromazine Hydrochloride Intensol,Largactil,Largactil Liquid,Largactil Oral Drops,Novo-Chlorpromazine,Thorazine,Thorazine Spansule
-chlorprothixene,Iaractan,Paxyl,Rentovet,Tactaran,Taractan,Tarasan,Tardan,Traquilan,Trictal,Truxal,Truxaletten,Truxil,Vetacalm
-clonazepam,clonazepamum,Antelepsin,Antilepsin,Cloazepam,Clonopin,Iktorivil,Klonopin,Klonopin Rapidly Disintegrating,Landsen,Rivotril
-clozapine,clozapin,Asaleptin,Clozaril,Fazaclo ODT,Iprox,Leponex,Lepotex
-cyproheptadine,Cypoheptadine,Cyproheptadiene,Cyproheptadine Hcl,Dibenzosuberonone/Cyproheptadine,Dronactin,Eiproheptadine,Periactin,Periactine,Periactinol,Peritol
-deserpidine,Deresperine,Desepridine,Deserpidin,Deserpidina,Deserpidinum,Deserpine,Desmethoxyreserpine,Aescin,Canescin,Canescine,Enduronyl,Harmonyl,Raunorine,Raunormin,Raunormine,Recanescin,Recanescine,Reserpidine,Tranquinil,beta-Escin
-fluphenazine,Fluorfenazine,Fluorophenazine,Fluorphenazine,Fluphenazine Decanoate,Fluphenazine Hcl,Triflumethazine,Apo-Fluphenazine,Elinol,Modecate,Moditen Enanthate,Moditen Hcl,Permitil Concentrate,Prolixin,Prolixin Concentrate,Prolixin Enanthate,Prolixine,Sevinol,Siqualine,Siqualon,Vespazine,Yespazine
-haloperidol,ALDO,Aloperidin,Aloperidol,Aloperidolo,Aloperidon,Apo-Haloperidol,Bioperidolo,Brotopon,Dozic,Dozix,Einalon S,Eukystol,Galoperidol,Haldol,Haldol Decanoate,Haldol La,Haldol Solutab,Halidol,Halojust,Halol,Halopal,Haloperido,Haloperidol Decanoate,Haloperidol Intensol,Haloperidol Lactate,Halopidol,Halopoidol,Halosten,Keselan,Lealgin Compositum,Linton,Mixidol,Novo-Peridol,Pekuces,Peluces,Peridol,Pernox,Pms Haloperidol,Serenace,Serenase,Serenelfi,Sernas,Sernel,Sigaperidol,Ulcolind,Uliolind,Vesalium
-mesoridazine,TPS-23,TPS23,Thioridazien Thiomethyl Sulfoxide,Thioridazine Monosulfoxide Analog,Thioridazine Thiomethyl Sulfoxide,Calodal,Lidanar,Lidanil,Serentil,Serentil Concentrate
-molindone,(+-)-molindone,Molindona,Molindonum,Moban
-olanzapine,Olansek,Symbyax,Zalasta,Zydis,Zyprexa,Zyprexa Intramuscular,Zyprexa Zydis
-perphenazine,Chlorperphenazine,Etaperazin,Etaperazine,Ethaperazine,PZC,Perfenazina,Perfenazine,Perphenazin,Apo-Perphenazine,Decentan,Emesinal,Etrafon-A,Etrafon-Forte,F-Mon,Fentazin,Perphenan,Thilatazin,Trifaron,Trilafon,Trilifan,Triphenot
-reserpine,Cam-Ap-Es,Demi-Regroton,Diupres-250,Diupres-500,Diutensen-R,Dralserp,Hiserpia,Hydrap-ES,Hydromox R,Hydroserpine Plus (R-H-H),Metatensin #2,Metatensin #4,Naquival,Novoreserpine,Rau-Sed,Regroton,Renese-R,Reserfia,Salutensin,Salutensin-Demi,Sandril,Ser-A-Gen,Serpalan,Serpanray,Serpasil,Serpasil-Apresoline,Serpasil-Esidrix #1,Serpasil-Esidrix #2,Serpate,Serpivite,Unipres
-risperidone,Risperidona,Risperidonum,risperdone,risperidone,Risperdal,Risperdal Consta,Risperdal M-Tab,Risperidal M-Tab,Risperin,Rispolept,Rispolin,Sequinan
-selegiline,L-Deprenalin,Selegeline Hcl,Selegilina,Selegilinum,selegiline,Apo-Selegiline,Carbex,Eldepryl,Emsam,Gen-Selegiline,Jumex,Novo-Selegiline,Nu-Selegiline,Sd Deprenyl,Zelapar
-thioridazine,Thioridazin,Thioridazine Chloride,Thioridazine Hcl,Thioridazine Hydrochloride,Thoridazine Hydrochloride,Aldazine,Mallorol,Malloryl,Meleril,Mellaril,Mellaril Hydrochloride,Mellaril-S,Mellarit,Mellerets,Mellerette,Melleretten,Melleril,Metlaril,Novoridazine,Orsanil,Ridazin,Ridazine,Sonapax,Sonapax Hydrochloride,Stalleril,Thioridazine Hcl Intensol,Thioridazine, Prolongatum,Tioridazin
-thiothixene,(e)-thiothixene,Cis-thiothixene,Thiothixine,Tiotixene,Tiotixeno,Tiotixenum,Navan,Navane,Navaron,Orbinamon
-trifluoperazine,Apo-Trifluoperazine,Eskazine,Eskazinyl,Fluoperazine,Jatroneural,Modalina,Novo-Trifluzine,PMS Trifluoperazine,Stelazine,Stelazine Concentrate,Stellazine,Synklor,Terfluzine,Trazine,Trifluoperazin,Trifluoperazina,Trifluoperazine Dihydrochloride,Trifluoperazine HCl,Trifluoperazine Hydrochloride,Trifluoromethylperazine,Trifluoroperazine,Trifluoroperazine Dihydrochloride,Trifluoroperazine Hydrochloride,Trifluperazine,Triflurin,Trifluroperizine,Triftazin,Triftazine,Triperazine,Triphtazin,Triphtazine,Triphthasine,Triphthazine,Triphthazine Dihydrochloride,Tryptazine,Tryptazine Dihydrochloride
+quetiapine,Quetiapin hemifumarate,Quetiapine fumarate,Quetiapine hemifumarate,Seroquel,Seroquel XR
 ziprasidone,Ziprasidone hydrochloride,Ziprasidone mesylate trihydrate,Geodon,Geodon Oral,Zeldox
+aripiprazole,abilify,abilitat
+olanzapine,Olansek,Symbyax,Zalasta,Zydis,Zyprexa,Zyprexa Intramuscular,Zyprexa Zydis
+risperidone,Risperidona,Risperidonum,risperdone,risperidone,Risperdal,Risperdal Consta,Risperdal M-Tab,Risperidal M-Tab,Risperin,Rispolept,Rispolin,Sequinan
+paliperidone,9-Hydroxyrisperidone,Invega
+Lurasidone,Latuda
+# carbamazepine,Apo-Carbamazepine,Atretol,Biston,Calepsin,Carbamazepen,Carbatrol,Carbazepine,Carbelan,Epitol,Equetro,Finlepsin,Karbamazepin,Lexin,Neurotol,Novo-Carbamaz,Nu-Carbamazepine,Sirtal,Stazepin,Stazepine,Taro-Carbamazepine,Taro-Carbamazepine Cr,Tegretal,Tegretol,Tegretol Chewtabs,Tegretol Cr,Tegretol-Xr,Telesmin,Teril,Timonil
+# chlorpromazine,Chloropromazine,Chlorpromanyl,Chlorpromanyl-20,Chlorpromanyl-40,Chlorpromazine Hydrochloride Intensol,Largactil,Largactil Liquid,Largactil Oral Drops,Novo-Chlorpromazine,Thorazine,Thorazine Spansule
+# chlorprothixene,Iaractan,Paxyl,Rentovet,Tactaran,Taractan,Tarasan,Tardan,Traquilan,Trictal,Truxal,Truxaletten,Truxil,Vetacalm
+# clonazepam,clonazepamum,Antelepsin,Antilepsin,Cloazepam,Clonopin,Iktorivil,Klonopin,Klonopin Rapidly Disintegrating,Landsen,Rivotril
+# clozapine,clozapin,Asaleptin,Clozaril,Fazaclo ODT,Iprox,Leponex,Lepotex
+# cyproheptadine,Cypoheptadine,Cyproheptadiene,Cyproheptadine Hcl,Dibenzosuberonone/Cyproheptadine,Dronactin,Eiproheptadine,Periactin,Periactine,Periactinol,Peritol
+# deserpidine,Deresperine,Desepridine,Deserpidin,Deserpidina,Deserpidinum,Deserpine,Desmethoxyreserpine,Aescin,Canescin,Canescine,Enduronyl,Harmonyl,Raunorine,Raunormin,Raunormine,Recanescin,Recanescine,Reserpidine,Tranquinil,beta-Escin
+# fluphenazine,Fluorfenazine,Fluorophenazine,Fluorphenazine,Fluphenazine Decanoate,Fluphenazine Hcl,Triflumethazine,Apo-Fluphenazine,Elinol,Modecate,Moditen Enanthate,Moditen Hcl,Permitil Concentrate,Prolixin,Prolixin Concentrate,Prolixin Enanthate,Prolixine,Sevinol,Siqualine,Siqualon,Vespazine,Yespazine
+# haloperidol,ALDO,Aloperidin,Aloperidol,Aloperidolo,Aloperidon,Apo-Haloperidol,Bioperidolo,Brotopon,Dozic,Dozix,Einalon S,Eukystol,Galoperidol,Haldol,Haldol Decanoate,Haldol La,Haldol Solutab,Halidol,Halojust,Halol,Halopal,Haloperido,Haloperidol Decanoate,Haloperidol Intensol,Haloperidol Lactate,Halopidol,Halopoidol,Halosten,Keselan,Lealgin Compositum,Linton,Mixidol,Novo-Peridol,Pekuces,Peluces,Peridol,Pernox,Pms Haloperidol,Serenace,Serenase,Serenelfi,Sernas,Sernel,Sigaperidol,Ulcolind,Uliolind,Vesalium
+# mesoridazine,TPS-23,TPS23,Thioridazien Thiomethyl Sulfoxide,Thioridazine Monosulfoxide Analog,Thioridazine Thiomethyl Sulfoxide,Calodal,Lidanar,Lidanil,Serentil,Serentil Concentrate
+# perphenazine,Chlorperphenazine,Etaperazin,Etaperazine,Ethaperazine,PZC,Perfenazina,Perfenazine,Perphenazin,Apo-Perphenazine,Decentan,Emesinal,Etrafon-A,Etrafon-Forte,F-Mon,Fentazin,Perphenan,Thilatazin,Trifaron,Trilafon,Trilifan,Triphenot
+# reserpine,Cam-Ap-Es,Demi-Regroton,Diupres-250,Diupres-500,Diutensen-R,Dralserp,Hiserpia,Hydrap-ES,Hydromox R,Hydroserpine Plus (R-H-H),Metatensin #2,Metatensin #4,Naquival,Novoreserpine,Rau-Sed,Regroton,Renese-R,Reserfia,Salutensin,Salutensin-Demi,Sandril,Ser-A-Gen,Serpalan,Serpanray,Serpasil,Serpasil-Apresoline,Serpasil-Esidrix #1,Serpasil-Esidrix #2,Serpate,Serpivite,Unipres
+# selegiline,L-Deprenalin,Selegeline Hcl,Selegilina,Selegilinum,selegiline,Apo-Selegiline,Carbex,Eldepryl,Emsam,Gen-Selegiline,Jumex,Novo-Selegiline,Nu-Selegiline,Sd Deprenyl,Zelapar
+# thioridazine,Thioridazin,Thioridazine Chloride,Thioridazine Hcl,Thioridazine Hydrochloride,Thoridazine Hydrochloride,Aldazine,Mallorol,Malloryl,Meleril,Mellaril,Mellaril Hydrochloride,Mellaril-S,Mellarit,Mellerets,Mellerette,Melleretten,Melleril,Metlaril,Novoridazine,Orsanil,Ridazin,Ridazine,Sonapax,Sonapax Hydrochloride,Stalleril,Thioridazine Hcl Intensol,Thioridazine, Prolongatum,Tioridazin
+# thiothixene,(e)-thiothixene,Cis-thiothixene,Thiothixine,Tiotixene,Tiotixeno,Tiotixenum,Navan,Navane,Navaron,Orbinamon
+# trifluoperazine,Apo-Trifluoperazine,Eskazine,Eskazinyl,Fluoperazine,Jatroneural,Modalina,Novo-Trifluzine,PMS Trifluoperazine,Stelazine,Stelazine Concentrate,Stellazine,Synklor,Terfluzine,Trazine,Trifluoperazin,Trifluoperazina,Trifluoperazine Dihydrochloride,Trifluoperazine HCl,Trifluoperazine Hydrochloride,Trifluoromethylperazine,Trifluoroperazine,Trifluoroperazine Dihydrochloride,Trifluoroperazine Hydrochloride,Trifluperazine,Triflurin,Trifluroperizine,Triftazin,Triftazine,Triperazine,Triphtazin,Triphtazine,Triphthasine,Triphthazine,Triphthazine Dihydrochloride,Tryptazine,Tryptazine Dihydrochloride
+# acetophenazine,tindal
+# molindone,(+-)-molindone,Molindona,Molindonum,Moban
