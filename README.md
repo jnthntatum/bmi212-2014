@@ -12,4 +12,8 @@ bmi212-2014
 # Notes:
 ## Format for credentials file
 {api key},{api secret},{access token},{token secret}
+## Setup
+make a copy of config.py.templ 
+`cp config.py.templ config.py`
+update location to your credentials file.
 
