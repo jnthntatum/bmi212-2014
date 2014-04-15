@@ -9,7 +9,7 @@ shinyUI(fluidPage(
   # Sidebar with a slider input for the number of bins
   sidebarLayout(
     sidebarPanel(
-      textInput("username","Username:","handle")
+      textInput("username","Username:","hayneswa sfexaminer nytimes")
     ),
     
     # Show a plot of the generated distribution
