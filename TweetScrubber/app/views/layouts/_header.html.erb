@@ -1,0 +1,15 @@
+<div class="page-header"> 
+	<h1>BMI212 Twitter Project <small>-- Tweet Scrubber</small></h2>
+</div>
+<% if flash['info'] %>
+	<div class="alert alert-info alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>Alert:</strong> <%= flash['info']%>
+	</div>
+<% end %>
+<% if flash['error'] %>
+	<div class="alert alert-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>Alert:</strong> <%= flash['error']%>
+	</div>
+<% end %>
