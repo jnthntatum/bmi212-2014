@@ -55,4 +55,11 @@ docs/_build/
 # credentials for twitter dev api
 *.cred
 
+# user specific app configurations
 config.py
+
+# editor backup files
+*.swp
+*~
+*.tmp
+ 
