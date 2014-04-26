@@ -1,4 +1,5 @@
 TweetScrubber::Application.routes.draw do
+  devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -54,5 +55,21 @@ TweetScrubber::Application.routes.draw do
   #     resources :products
   #   end
 
+  get 'user/' => 'users#show', as: :user_show
+  get 'user/edit' => 'users#edit', as: :user_edit
+  post 'user/edit' => 'users#update'
+
+  
+  # pages
+  get 'user/twitter/table' => 'tweeters#table', as: :tweeters_table
+  get 'user/twitter/show' => 'tweeters#show', as: :tweeters_show
+  get 'user/twitter/add' => 'tweeters#add', as: :tweeters_add
+  
+  # api
+  post 'user/twitter/loadtimeline' => 'tweeters#load_timeline', as: :tweeters_load_timeline
+  post 'user/twitter/update' => 'tweeters#update_many', as: :tweeters_update_many
+  post 'user/twitter/add' => 'tweeters#add_many', as: :tweeters_add_many
+  post 'user/twitter/loaddescription' => 'tweeters#load_description', as: :tweeters_load_description
+  
   root 'index#index'
 end

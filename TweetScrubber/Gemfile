@@ -32,6 +32,13 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'twitter'
+gem 'devise'
+gem 'cancan'
+gem 'handlebars_assets'
+gem 'gon'
+gem 'thin'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

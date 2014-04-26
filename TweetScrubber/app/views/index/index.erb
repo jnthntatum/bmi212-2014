@@ -1,2 +1,9 @@
 <h2>About</h2>
 <p>This experimental tool has been designed to help with the task of identifying users on twitter as interesting.</p>
+<% if user_signed_in? %>
+<%= link_to "Process Pending tweets", tweeters_show_path %> <br/>
+<%= link_to "Queue tweets", tweeters_add_path %> <br/>
+<%= link_to "Show table", tweeters_table_path %> <%= link_to "(csv)", tweeters_table_path(format: "csv") %>   <br />
+<% else %>
+For access to tools, please <%= link_to "Login", new_user_session_path %> 
+<% end %>

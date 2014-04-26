@@ -1,0 +1,16 @@
+<h2> Results: </h2>
+<table class="table table-striped">
+	<tr>
+		<% @table[0].each do |el| %>
+			<th><%= el %></th> 
+		<% end %>
+	</tr>
+	<% @table[1, @table.size()- 1 ].each do |row| %>
+		<tr>
+			<% row.each do |el| %>
+				<td><%= el %></td> 
+			<% end %>
+		</tr>
+	<% end %>
+
+</table>

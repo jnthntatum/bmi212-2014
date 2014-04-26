@@ -60,7 +60,6 @@ TweetScrubber::Application.configure do
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
   # config.assets.precompile += %w( search.js )
-
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
@@ -77,4 +76,12 @@ TweetScrubber::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  config.force_ssl = true
+
+  config.serve_static_assets = true
+  config.assets.precompile = ['*.js', '*.css', '', '**/vendor/fonts/*']
+  config.assets.paths << Rails.root.join('vendor', 'assets', 'fonts')
+  config.assets.precompile += ['*.js', '*.css', '*.woff', '*.eot', '*.ttf', '*.svg']
+  
 end

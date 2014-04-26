@@ -4,12 +4,15 @@
   <title>TweetScrubber</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= include_gon %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<%= render 'layouts/header' %>
-
-<%= yield %>
-
+	
+	<%= render 'layouts/header' %>
+	<div class="container" id="body_container">
+		<%= yield %>
+	</div>
+</div>
 </body>
 </html>
