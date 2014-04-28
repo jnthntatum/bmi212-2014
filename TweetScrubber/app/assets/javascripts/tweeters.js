@@ -42,9 +42,9 @@
 			url: gon.tweeter_update_many_url,
 			data: JSON.stringify({ updates: updates }),
 			dataType: 'json',
-			success: function(){alert("update success"); updates={};},
-			error: function(){console.log("couldn't update");},
-			complete: function() { T.update_tweets.active=false;}
+			success: function() { alert("update success"); updates = {}; },
+			error: function() { console.log("couldn't update"); },
+			complete: function() { T.update_tweets.active = false;}
 		});
 	};
 
@@ -54,7 +54,7 @@
 		if ( T.add_users.active ) {
 			return;
 		}
-		T.update_tweets.active = true;
+		T.add_users.active = true;
 		var $textarea = jqEvent.data;
 		var text = $textarea.val(); 
 		var data = {
@@ -64,9 +64,9 @@
 			url: gon.tweeter_add_many_url,
 			data: JSON.stringify(data),
 			dataType: 'json',
-			success: function(result){alert("Update success. " + result.count + "new records."); },
+			success: function(result){alert("Update success. " + result.count + " new records."); },
 			error: function(){alert("failed. check error log");},
-			complete: function() { T.add_users.active=false;}
+			complete: function() { T.add_users.active = false;}
 		});
 	};
 
@@ -130,6 +130,7 @@
 	}
 
 	function load_next_user() {
+		console.log("next user.");
 		while ( loaded_count < tweeters.length &&
 				skip_updated &&
 				tweeters[loaded_count].updated ) 
@@ -148,6 +149,8 @@
 				updated: tweeter.updated,
 				idx: loaded_count };
 			loaded_count ++;
+		} else {
+			alert("Done! No users left in queue");
 		}
 	}
 

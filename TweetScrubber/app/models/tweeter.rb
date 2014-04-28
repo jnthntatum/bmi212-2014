@@ -11,7 +11,7 @@ class Tweeter < ActiveRecord::Base
 	def self.add_many ( user, user_ids )
 		successes = 0
 		user_ids.each do |uid|
-			t = Tweeter.new(user_id: uid, twitter_user_id: uid);
+			t = Tweeter.new(user_id: user.id, twitter_user_id: uid);
 			begin 
 				t.save!
 				successes = successes + 1
