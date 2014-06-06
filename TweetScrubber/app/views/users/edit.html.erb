@@ -1,0 +1,22 @@
+<div class="row"> 
+	<h2> User Profile: <%= "#{current_user.first_name} #{current_user.last_name}" %> <small> <%= link_to "[cancel]", user_show_path %></small></h2>
+	<%= form_for @user, url: user_edit_url, html: {method: "post", role: "form"} do |f| %>
+		<div class="form-group">
+			<div class="col-md-2">
+				<%= label_tag :api_key, "API Key"%> <br />
+				<%= label_tag :api_secret, "API Secret"%> <br />
+				<%= label_tag :access_token, "Access Token"%> <br />
+				<%= label_tag :access_token_secret, "Access Token Secret"%> <br />
+				<%= f.submit "Save"%>
+				<%= link_to "[cancel]", user_show_path %>
+			</div>
+			<div class="col-md-8">
+				<%= f.text_field :api_key%> <br />
+				<%= f.text_field :api_secret%> <br />
+				<%= f.text_field :access_token%> <br />
+				<%= f.text_field :access_token_secret%> <br />
+				
+			</div>
+		</div>
+	<% end %>
+</div>

@@ -1,0 +1,27 @@
+{{! timeline table}}
+<div class="scroll-wrapper" style="max-height:400px;overflow:auto;">
+	<table class="table table-striped">  
+		<tr>
+			<th >Time</th>
+			<th >Location</th>
+			<th colspan="3">Text</th>
+			<th >Count: {{statuses.length}}</th>	
+		</tr>
+		<tbody>
+		{{#if statuses}} 
+			{{#each statuses}}
+				<tr>
+					<td>{{created_at}}</div>
+					<td>{{place}}</div>
+					<td colspan="3">{{text}}</div>	
+				</tr>
+			{{/each}}
+		{{else}}
+			<tr>
+				<td>Error no data</td>
+				<td>{{error}}</td>
+			</tr> 
+		{{/if}}
+		</tbody>
+	</table>
+</div>

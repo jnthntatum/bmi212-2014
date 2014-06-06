@@ -1,0 +1,17 @@
+<div class = "row">
+	<h2> User Profile: <%= "#{current_user.first_name} #{current_user.last_name}" %> <small> <%=link_to "[edit]", user_edit_path %> <%= link_to "[account details]", edit_user_registration_path %></small></h2>
+	<table class="table">
+		<tr>
+			<td>API Key</td> <td> <%=  if @user.api_key then @user.api_key else "not set" end%></td>
+		</tr>
+		<tr>
+			<td>API Secret</td> <td> <%= if @user.api_secret then @user.api_secret  else "not set" end %></td>
+		</tr>
+		<tr>
+			<td>Access Token</td> <td> <%=  if @user.access_token then @user.access_token else "not set" end %></td>
+		</tr>
+		<tr>
+			<td>Access Token Secret</td> <td> <%=  if @user.access_token_secret then @user.access_token_secret else "not set" end %></td>
+		</tr>
+	</table>
+</div> 

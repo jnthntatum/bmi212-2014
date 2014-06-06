@@ -1,0 +1,28 @@
+/*
+ * example.json
+ * Example user and timeline 
+ */
+ {
+ 	"user_id": "99999999",
+ 	"description": {
+ 		"screen_name": "Example",
+ 		"description": "Demo - example twitter user."
+ 	},
+ 	"statuses": [
+ 		{
+ 			"created_at": "Wed Apr 30 20:00:00 +0000 2014",
+ 			"place": null,
+ 			"text": "Another Example Tweet" 
+ 		},
+ 		{
+ 			"created_at": "Wed Apr 30 19:00:00 +0000 2014",
+ 			"place": null,
+ 			"text": "A second Example Tweet" 
+ 		},
+ 		{
+ 			"created_at": "Wed Apr 30 18:00:00 +0000 2014",
+ 			"place": null,
+ 			"text": "An Example Tweet" 
+ 		}
+ 	]
+ } 

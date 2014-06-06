@@ -1,0 +1,44 @@
+<div class="page-header"> 
+	<h2 class="pull-left">BMI212 Twitter Project <small>-- Tweet Scrubber</small></h2>
+	<div class="pull-right btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    		<% if user_signed_in? %>
+    			Signed in as: <b><%= current_user.first_name %></b>
+    		<% else %>
+    			Accounts
+    		<% end %> 
+    		<span class="caret"></span>
+  		</button>
+  		<ul class="dropdown-menu" role="menu">
+  			<% if user_signed_in? %>
+    			<li><%= link_to "Profile", user_show_path %></li>
+		    	<li><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
+    		<% else %>
+    			<li><%= link_to "Sign in", new_user_session_path %></li>
+		    	<li><%= link_to "Sign up", new_user_registration_path %></li>
+    		<% end %> 
+		    
+		    <!-- <li class="divider"></li> -->
+  		</ul>
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+<% if flash[:alert] %>
+	<div class="alert alert-warning alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>Alert:</strong> <%= flash[:alert]%>
+	</div>
+<% end %>
+<% if flash[:notice] %>
+	<div class="alert alert-info alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>Notice:</strong> <%= flash[:notice]%>
+	</div>
+<% end %>
+<% if flash[:error] %>
+	<div class="alert alert-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>Error:</strong> <%= flash[:error]%>
+	</div>
+<% end %>

@@ -1,0 +1,26 @@
+<h2>Show Tweets <small> Skip already processed users: <input id='tweeter-skip-updated-check' type="checkbox"></input></small></h2>
+<div class='row'>
+	<div class='col-md-8' id='tweeter-container'>
+
+	</div>
+	<div class='col-md-4' id='tweeter-info'>
+		<h3>Menu:</h3>
+		<%= link_to "Queue tweets", tweeters_add_path %> <br/>
+		<h3>Classification directions:</h3>
+		<p></p>
+		<h3>Reports:</h3>
+			<%= link_to "Show table", tweeters_table_path %> 
+			<%= link_to "(csv)", tweeters_table_path(format: "csv") %>
+	</div>
+	<div class='clearfix'> </div>
+</div>
+<div class='row'>
+	<div class='col-md-12' id='tweeter-controls'>
+		<button type="button" class="btn btn-default btn-lg" id='tweeter-next-btn'>
+	  		Next <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
+		</button> &nbsp;
+		<button type="button" class="btn btn-default btn-lg" id='tweeter-update-btn'>
+	  		Update <span class="glyphicon glyphicon glyphicon-chevron-up"></span>
+		</button>
+	</div>
+</div>
