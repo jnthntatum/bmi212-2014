@@ -10,30 +10,49 @@ library(neuralnet)
 library(glmnet)
 # library(scatterplot3d)
 
-full.data = read.table("features.csv", header = T, sep = "\t")
-
-#throw out 161, 175, 251 - no data
-full.data = full.data[!(rownames(full.data) %in% c(161, 175, 251)),]
-full.data = full.data[,!(colnames(full.data) %in% c("drug", "user.id", "time.offsetted", "total.tweets", "num.tweets", "cohort_name"))]
-
-full.data$label[full.data$label == 4] = 1
-full.data$label[full.data$label == 1] = 1
-#full.data$label[full.data$label == 2] = 0
-full.data$label[full.data$label == 6] = 0
-# remove old controls no longer in use
-full.data = full.data[-which(full.data$label > 1), ]
-
-set.seed(10000)
-#split into 20% test and 80% training
-pos = which(full.data$label == 1)
-test.pos = sample(pos, length(pos) * .2, replace=F)
-neg = which(full.data$label == 0)
-test.neg = sample(neg, length(neg) * .2, replace=F)
-
-test = full.data[c(test.pos, test.neg), ]
-training = full.data[-c(test.pos, test.neg), ]
-
+# full.data = read.table("features.csv", header = T, sep = "\t")
+# all = full.data
+# 
+# full.data$label[full.data$label == 1] = 1
+# full.data$label[full.data$label == 2] = 0
+#
+# set.seed(10000)
+# #split into 25% test and 75% training
+# pos = which(full.data$label == 1)
+# test.pos = sample(pos, length(pos) * .25, replace=F)
+# neg = which(full.data$label == 0)
+# test.neg = sample(neg, length(neg) * .25, replace=F)
+# 
+# 
+# test = full.data[c(test.pos, test.neg), ]
+# training = full.data[-c(test.pos, test.neg), ]
+# write.table()
 set.seed(as.integer(Sys.time()))
+
+training = read.table("train.dat")
+test = read.table("test.dat")
+correction = read.table("features.csv", header = T, sep = "\t")
+correction$label = 1
+# errror recording id 35959731 => 2413555298
+idx = which(training$user.id == 35959731 )
+
+bad = which(training$delay.10th == 0 | training$in.degree == 0 | test$out.degree == 0)
+training = training[-(bad),]
+
+bad = which(test$delay.10th == 0 | test$in.degree == 0 | test$out.degree == 0)
+test = test[-(bad), ]
+
+all = rbind(training, test)
+
+remove.cols = function(tab) {
+  return (tab[, !(colnames(tab) %in% c("drug", "user.id", "time.offsetted", "total.tweets", "num.tweets", "cohort_name"))])
+}
+
+training = remove.cols(training)
+test = remove.cols(test)
+training[idx, ] = remove.cols(correction)
+full.data = rbind(training, test)
+
 
 lab2err = function(labels, predictions) 
 {
@@ -64,7 +83,7 @@ test.Bayes = function (model, test.data, test.labels, arguments=NA){
 
 # svm
 
-train.svm.args = list(kernel="radial", gamma=0.01, C=1)
+train.svm.args = list(kernel="radial", gamma=0.01, C=1, cw=c("1"=3, "0"=1))
 
 train.svm = function(training.data, 
                      training.labels, 
@@ -74,7 +93,9 @@ train.svm = function(training.data,
                   as.factor(training.labels),
                   kernel = arguments$kernel,
                   cost=arguments$C, # cost for misclassification. Higher 
-                  # values reduces tolerance for misclasses 
+                  # values reduces tolerance for misclasses
+                  scale=F,
+                  #class.weights=arguments$cw,
                   gamma = arguments$gamma # "width" of the kernel
   )
   return(svm.model)
@@ -178,13 +199,23 @@ avg.kfold = function (train.fn, test.fn, dataset, k, train.args=NA, test.args=NA
   return (df)
 }
 
+train.scaled = data.frame(cbind(label=training$label, scale(removeLabels(training))))
+
 deltas = c("delay.10th", "delay.25th", "delay.50th", "delay.75th", "delay.90th") 
 train.logged = training
 train.logged[, deltas] = log(train.logged[, deltas] + 1, 10)
 
-train.feat = training[, !(colnames(training) %in% c("label"))]
-pca = prcomp(x=train.feat, , center=T, scale.=T)
-train.pca = cbind(label=training$label, data.frame(pca$x))
+train.logged.scaled = data.frame(cbind(label=training$label, scale(removeLabels(train.logged))))
+
+train.feat = removeLabels(training)
+pca = prcomp(x=train.feat, center=T, scale.=T)
+train.pca = cbind(label=training$label, data.frame(scale(pca$x)))
+train.pca.99 = train.pca[, 1:23]
+train.pca.95 = train.pca[, 1:19]
+train.pca.90 = train.pca[, 1:16]
+train.pca.85 = train.pca[, 1:14]
+train.pca.80 = train.pca[, 1:12]
+train.pca.75 = train.pca[, 1:9]
 
 train.feat = train.logged[, !(colnames(training) %in% c("label"))]
 pca = prcomp(x=train.feat, center=T, scale.=T)
@@ -206,48 +237,51 @@ train.logged.pca = cbind(label=training$label, data.frame(pca$x))
 # print(kfold.cv(train.svm, test.svm, train.logged, 5, train.svm.args))
 # print(kfold.cv(train.nn, test.nn, train.logged, 5, train.nn.args, test.nn.args))
 
-# gammas = seq(from=0.0025, to=0.05, by=0.0025) 
-# Cs      = seq(from=25, to=50, by=2.5)
-# 
-# plot(0, 0, xlim = c(0.005, 0.05), ylim=c(0.4, 0.8))
-# best = rbind(c(0, 0, 0), c(0,0,0))
-# max.f1 = c(0, 0, 0)
-# max.sd = c(0, 0, 0)
-# w.max = 1
-# for (j in Cs) {
-#   r.tab = c() 
-#   for (i in gammas) {
-#     train.svm.args$gamma = i
-#     train.svm.args$C = j
-#     results = avg.kfold(train.svm, test.svm, train.logged.pca, 5, train.svm.args, n=10)
-#     print(results)
-#     a.results = apply(results, 2, mean)
-#     sd.results = apply(results, 2, sd)
-#     r.tab = rbind(r.tab, a.results)
-#     if (a.results['f1'] > max.f1[w.max]) {
-#       max.f1[w.max] = a.results['f1']
-#       max.sd[w.max] = sd.results['f1']
-#       best[, w.max] = c(j, i)
-#       w.max = which.min(max.f1)
-#     }
-#   }
-#   lines(x=gammas, y=r.tab[, "f1"])  
-# } 
+gammas = 2 ^ seq(from=-10, to=-4.5, by=0.5) 
+Cs      = 2 ^ seq(from=3, to=8, by = 0.5)
 
-# train.svm.args$gamma = 0.01
-# train.svm.args$C = 42.5
-# results = avg.kfold(train.svm, test.svm, train.logged.pca, 5, train.svm.args, n=10)
+plot(0, 0, xlim = c(0., 0.05), ylim=c(0.4, 0.8))
+best = rbind(c(0, 0, 0), c(0,0,0))
+max.f1 = c(0, 0, 0)
+max.sd = c(0, 0, 0)
+w.max = 1
+for (j in Cs) {
+  r.tab = c() 
+  for (i in gammas) {
+    train.svm.args$gamma = i
+    train.svm.args$C = j
+    results = avg.kfold(train.svm, test.svm, train.pca, 5, train.svm.args, n=50)
+    # print(results)
+    a.results = apply(results, 2, mean)
+    sd.results = apply(results, 2, sd)
+    r.tab = rbind(r.tab, a.results)
+    if (a.results['f1'] > max.f1[w.max]) {
+      max.f1[w.max] = a.results['f1']
+      max.sd[w.max] = sd.results['f1']
+      best[, w.max] = c(j, i)
+      w.max = which.min(max.f1)
+    }
+  }
+  lines(x=gammas, y=r.tab[, "f1"])  
+} 
+ 
+print(best)
+print(max.f1)
+print(max.sd)
+
+train.svm.args$gamma = 2^-8
+train.svm.args$C = 2^8
+results = avg.kfold(train.svm, test.svm, train.pca.95, 5, train.svm.args, n=50)
 # print(results)
-# a.results = apply(results, 2, mean)
-# sd.results = apply(results, 2, sd)
-# 
-# print(a.results)
-# print(sd.results)
+a.results = apply(results, 2, mean)
+sd.results = apply(results, 2, sd)
+print (a.results)
+print (sd.results)
 
-# Train naive bayes. tuneable parameter is only laplace smoothing.
+
 # laplace = c(2.0)
 # plot(0, 0, xlim = c(1, 29), ylim=c(0, 1.0))
-# pcs = 1:29
+# pcs = 1:28
 # best = rbind(c(0, 0, 0))
 # max.f1 = c(0, 0, 0)
 # max.sd = c(0, 0, 0)
@@ -268,12 +302,33 @@ train.logged.pca = cbind(label=training$label, data.frame(pca$x))
 #   }
 # } 
 # 
-# lines(x=pcs, y=r.tab[, 'f1'])
+# lines(x=1:28, y=r.tab[, 'f1'])
 # 
 # print (best)
 # print (max.sd)
 # print (max.f1)
 
+r.tab = NULL
+results = avg.kfold(train.Bayes, test.Bayes, train.logged.pca, 5, train.Bayes.args, n=50)
+  print(results)
+  a.results = apply(results, 2, mean)
+  sd.results = apply(results, 2, sd)
+  r.tab = rbind(r.tab, a.results)
+results = avg.kfold(train.Bayes, test.Bayes, train.logged, 5, train.Bayes.args, n=50)
+
+a.results = apply(results, 2, mean)
+sd.results = apply(results, 2, sd)
+r.tab = rbind(r.tab, a.results)
+results = avg.kfold(train.Bayes, test.Bayes, train.pca, 5, train.Bayes.args, n=50)
+
+a.results = apply(results, 2, mean)
+sd.results = apply(results, 2, sd)
+r.tab = rbind(r.tab, a.results)
+results = avg.kfold(train.Bayes, test.Bayes, training, 5, train.Bayes.args, n=50)
+
+a.results = apply(results, 2, mean)
+sd.results = apply(results, 2, sd)
+r.tab = rbind(r.tab, a.results)
 
 # train nueral net
 # need to set training time, network structure and prediction threshold
@@ -296,19 +351,19 @@ structures = list(
   #c(29, 14, 7)
   #c(29, 29, 29),
 )
-# thresholds = seq(0, 1, by=0.01)
-# plot(0, 0, xlim = c(1, 29), ylim=c(0, 1.0))
-# best = rbind(c(0, 0, 0))
-# max.f1 = c(0, 0, 0)
-# max.sd = c(0, 0, 0)
-# w.max = 1
-# r.tab = c()
+thresholds = seq(0, 1, by=0.01)
+plot(0, 0, xlim = c(1, 29), ylim=c(0, 1.0))
+best = rbind(c(0, 0, 0))
+max.f1 = c(0, 0, 0)
+max.sd = c(0, 0, 0)
+w.max = 1
+r.tab = c()
 # for (j in 1:length(structures)) { 
 #   train.nn.args$stepmax = 1e5
 #   train.nn.args$threshold = 1e-3
 #   train.nn.args$hidden = structures[[j]]
 #   test.nn.args$threshold = 0.5
-#   results = avg.kfold(train.nn, test.nn, train.logged.pca, 5, train.nn.args, test.nn.args, n=10)
+#   results = avg.kfold(train.nn, test.nn, train.pca, 5, train.nn.args, test.nn.args, n=5)
 #   print(results)
 #   a.results = apply(results, 2, mean)
 #   sd.results = apply(results, 2, sd)
@@ -320,24 +375,30 @@ structures = list(
 #     w.max = which.min(max.f1)
 #   }
 # } 
-# lines(x=1:(length(structures)), y=r.tab[, 'f1'])
-
-# print (best)
-# print (max.sd)
-# print (max.f1)
-
-
-# train.nn.args$stepmax = 1e5
-# train.nn.args$threshold = 1e-3
-# train.nn.args$hidden = c(1)
-# test.nn.args$threshold = 0.5
-# # results = avg.kfold(train.nn, test.nn, train.logged.pca, 5, train.nn.args, test.nn.args, n=10)
-# print(results)
+# 
+# train.nn.args$hidden = structures[[1]]
+# results = avg.kfold(train.nn, test.nn, train.pca, 5, train.nn.args, test.nn.args, n=5)
 # a.results = apply(results, 2, mean)
 # sd.results = apply(results, 2, sd)
 # 
 # print(a.results)
 # print(sd.results)
+# print (best)
+# print (max.sd)
+# print (max.f1)
+
+
+train.nn.args$stepmax = 1e5
+train.nn.args$threshold = 1e-3
+train.nn.args$hidden = c(1)
+test.nn.args$threshold = 0.5
+results = avg.kfold(train.nn, test.nn, train.pca, 5, train.nn.args, test.nn.args, n=20)
+print(results)
+a.results = apply(results, 2, mean)
+sd.results = apply(results, 2, sd)
+# 
+print(a.results)
+print(sd.results)
 
 # ==============================
 # End tuning
@@ -370,6 +431,8 @@ for (col in colnames(training)) {
 tab = tab[order(as.double(tab[, 3])), ]
 tab2 = tab2[order(as.double(tab2[, 3])), ]
 
+tab = cbind(tab, p.adjust(as.double(tab[, 3]), method="BH"))
+
 ##
 # testing for final report
 
@@ -378,26 +441,38 @@ ntest = nrow(test)
 all = rbind(training, test)
 deltas = c("delay.10th", "delay.25th", "delay.50th", "delay.75th", "delay.90th") 
 
+all.scaled = data.frame(cbind(label = all$label, scale(removeLabels(all))))
+tr.scaled = all.scaled[1:ntrain, ]
+te.scaled = all.scaled[-(1:ntrain), ]
+
+
 ds.logged = all
 ds.logged[, deltas] = log(ds.logged[, deltas] + 1, 10)
 tr.logged = ds.logged[1:ntrain, ]
 te.logged = ds.logged[-(1:ntrain), ]
 
-ds.feat = all[, !(colnames(all) %in% c("label"))]
+ds.feat = removeLabels(all)
 pca = prcomp(x=ds.feat, center=T, scale.=T)
 ds.pca = cbind(label=all$label, data.frame(pca$x))
 tr.pca = ds.pca[1:ntrain, ]
 te.pca = ds.pca[-(1:ntrain), ]
 
-ds.feat = ds.logged[, !(colnames(training) %in% c("label"))]
-pca = prcomp(x=ds.feat, center=T, scale.=T)
-ds.logged.pca = cbind(label=all$label, data.frame(pca$x))
-tr.logged.pca = ds.logged.pca[1:ntrain, ]
-te.logged.pca = ds.logged.pca[-(1:ntrain), ]
+# 23 => 99%
+# 18 => 95%
+# 15 => 90%
+# 13 => 85%
+tr.pca.95 = ds.pca[1:ntrain, 1:23]
+te.pca.95 = ds.pca[-(1:ntrain), 1:23]
+
+# ds.feat = ds.logged[, !(colnames(training) %in% c("label"))]
+# pca = prcomp(x=ds.feat, center=T, scale.=T)
+# ds.logged.pca = cbind(label=all$label, data.frame(pca$x))
+# tr.logged.pca = ds.logged.pca[1:ntrain, ]
+# te.logged.pca = ds.logged.pca[-(1:ntrain), ]
 
 # tuned parameters
-train.svm.args$gamma = 0.01
-train.svm.args$C     = 35
+train.svm.args$gamma = 2^-9
+train.svm.args$C     = 2^8
 
 train.Bayes.args$laplace = 2.0
 
@@ -405,39 +480,65 @@ train.nn.args$stepmax = 1e5
 train.nn.args$threshold = 1e-3
 train.nn.args$hidden = c(1)
 test.nn.args$threshold = 0.5
-
-removeLabels = function(df) {
-  return (df[, -which(is.element(colnames(df), c("label")))])
-}
-
+print ("NAIVE BAYES")
 nb.model = train.Bayes(removeLabels(tr.logged), tr.logged$label, train.Bayes.args)
 nb.result = test.Bayes(nb.model, removeLabels(te.logged), te.logged$label)
-
 print(format.results(nb.result))
 
+print("\nSVM PCA")
+train.svm.args$gamma = 2^-8
+train.svm.args$C     = 2^8
 svm.model = train.svm(removeLabels(tr.pca), tr.pca$label, train.svm.args)
-svm.result = test.svm(svm.model, removeLabels(te.pca), te.pca$label)
-
+svm.result = test.svm(svm.model, removeLabels(te.pca), te.pca$label) 
 print(format.results(svm.result))
 
+print("SVM PCA 95")
+train.svm.args$gamma = 2^-8
+train.svm.args$C = 2^8
+svm.model = train.svm(removeLabels(tr.pca.95), tr.pca$label, train.svm.args)
+svm.result = test.svm(svm.model, removeLabels(te.pca.95), te.pca$label)
+print(format.results(svm.result))
+
+print("SVM UNTRANSFORMED")
+train.svm.args$gamma = 2^-8
+train.svm.args$C = 2^8
+svm.model = train.svm(removeLabels(training), tr.pca$label, train.svm.args)
+svm.result = test.svm(svm.model, removeLabels(test), te.pca$label)
+print(format.results(svm.result))
+
+print("\nANN")
 nn.model = train.nn(removeLabels(tr.pca), tr.pca$label, arguments=train.nn.args)
 test.nn.args$threshold = 0.5
 nn.result = test.nn(nn.model, removeLabels(te.pca), te.pca$label, test.nn.args)
 
 print(format.results(nn.result))
+# 
+# # Logistic regression just for fun
+# model = cv.glmnet(as.matrix(removeLabels(tr.logged)), as.factor(tr.pca$label), family="binomial")
+# pred = as.integer(predict(model, as.matrix(removeLabels(te.logged)), type='response') > 0.5)
+# logit.result = lab2err(te.logged$label, pred)
+# 
+# print(format.results(logit.result))
 
-# Logistic regression just for fun
-model = cv.glmnet(as.matrix(removeLabels(tr.logged)), as.factor(tr.pca$label), family="binomial")
-pred = as.integer(predict(model, as.matrix(removeLabels(te.logged)), type='response') > 0.5)
-logit.result = lab2err(te.logged$label, pred)
 
-print(format.results(logit.result))
+# ds.feat = all[, !(colnames(all) %in% c("label"))]
+# pca = prcomp(x=ds.feat, center=T, scale.=T)
+# ds.pca = cbind(label=all$label, data.frame(pca$x))
+# tr.pca = ds.pca[1:ntrain, ]
+# te.pca = ds.pca[-(1:ntrain), ]
 
-#visualize PCA
+# dir_guess = predict(svm.model, removeLabels(director), type="class")
+# 
+# pred = as.integer(predict(model, as.matrix(removeLabels(te.logged)), type='response') > 0.5)
+# 
+
+# 
+# #visualize PCA
+# library(scatterplot3d)
 # for (i in (1:36)*10) {
-#   scatterplot3d(train.logged.pca[, c(2,3,4)],
-#                 pch=train.logged.pca$label + 2, 
-#                 color=train.logged.pca$label + 3, 
+#   scatterplot3d(tr.pca[, c(2,3,4)],
+#                 pch=tr.pca$label + 2, 
+#                 color=tr.pca$label + 3, 
 #                 angle=i, 
 #                 box=T, highlight.3d=F, 
 #                 type="h")
