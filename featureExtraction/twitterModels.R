@@ -31,16 +31,16 @@ set.seed(as.integer(Sys.time()))
 
 training = read.table("train.dat")
 test = read.table("test.dat")
-correction = read.table("features.csv", header = T, sep = "\t")
-correction$label = 1
-# errror recording id 35959731 => 2413555298
-idx = which(training$user.id == 35959731 )
-
-bad = which(training$delay.10th == 0 | training$in.degree == 0 | test$out.degree == 0)
-training = training[-(bad),]
-
-bad = which(test$delay.10th == 0 | test$in.degree == 0 | test$out.degree == 0)
-test = test[-(bad), ]
+# correction = read.table("features.csv", header = T, sep = "\t")
+# correction$label = 1
+# # errror recording id 35959731 => 2413555298
+# idx = which(training$user.id == 35959731 )
+# 
+# bad = which(training$delay.10th == 0 | training$in.degree == 0 | training$out.degree == 0)
+# training = training[-(bad),]
+# 
+# bad = which(test$delay.10th == 0 | test$in.degree == 0 | test$out.degree == 0)
+# test = test[-(bad), ]
 
 all = rbind(training, test)
 
@@ -209,7 +209,7 @@ train.logged.scaled = data.frame(cbind(label=training$label, scale(removeLabels(
 
 train.feat = removeLabels(training)
 pca = prcomp(x=train.feat, center=T, scale.=T)
-train.pca = cbind(label=training$label, data.frame(scale(pca$x)))
+train.pca = cbind(label=training$label, data.frame(pca$x))
 train.pca.99 = train.pca[, 1:23]
 train.pca.95 = train.pca[, 1:19]
 train.pca.90 = train.pca[, 1:16]
